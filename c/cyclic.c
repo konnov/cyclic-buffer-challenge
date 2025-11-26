@@ -10,7 +10,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#define BUF_SIZE 10
+// Define buffer size if not already defined, e.g., with -DBUF_SIZE=20
+#ifndef BUF_SIZE
+    #define BUF_SIZE 10
+#endif
 
 static int buffer[BUF_SIZE];
 static int* head = buffer;  // next element to read
