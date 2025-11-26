@@ -16,6 +16,15 @@ all: $(TARGET)
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
 
+cyclic-afl: $(SRC)
+	afl-cc $(CFLAGS) cyclic.c -o cyclic-afl
+
+fuzz-binary: cyclic-afl
+	AFL_SKIP_CPUFREQ=1 afl-fuzz -D -i binary-seeds -o out -- ./cyclic binary
+
+fuzz-text: cyclic-afl
+	AFL_SKIP_CPUFREQ=1 afl-fuzz -D -i text-seeds -o out -- ./cyclic text
+
 clean:
 	rm -f $(TARGET)
 

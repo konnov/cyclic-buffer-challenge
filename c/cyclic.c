@@ -1,7 +1,8 @@
+// vim: ts=4 sw=4 et:
 /**
  * Cyclic buffer challenge in C.
  *
- * @author ChatGPT and Igor Konnov, 2025
+ * @author Igor Konnov, 2025 (bootstrapped with ChatGPT)
  */
 
 #include <assert.h>
@@ -52,25 +53,10 @@ int starts_with(const char *s, const char *prefix) {
     return strncmp(s, prefix, strlen(prefix)) == 0;
 }
 
-int main(int argc, char **argv) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <commands.txt|->\n", argv[0]);
-        return 1;
-    }
-
-    FILE *f;
-    if (strcmp(argv[1], "-") == 0) {
-        f = stdin;
-    } else {
-        f = fopen(argv[1], "r");
-        if (!f) {
-            perror("Cannot open input file");
-            return 1;
-        }
-    }
-
+// execute commands that we read in the text mode
+int run_text() {
     char line[256];
-    while (fgets(line, sizeof(line), f)) {
+    while (fgets(line, sizeof(line), stdin)) {
         // Strip trailing whitespace
         line[strcspn(line, "\r\n")] = 0;
 
@@ -81,6 +67,7 @@ int main(int argc, char **argv) {
                 printf("WROTE %d\n", val);
             } else {
                 fprintf(stderr, "Malformed WRITE command: '%s'\n", line);
+		return 2;
             }
         }
         else if (starts_with(line, "R")) {
@@ -89,6 +76,7 @@ int main(int argc, char **argv) {
                 printf("READ %d\n", value);
             } else {
                 fprintf(stderr, "Warning: READ called on empty buffer\n");
+                return 3;
             }
         }
         else if (strlen(line) == 0) {
@@ -96,11 +84,55 @@ int main(int argc, char **argv) {
         }
         else {
             fprintf(stderr, "Unknown command: '%s'\n", line);
+	    return 4;
         }
     }
 
-    if (f != stdin) {
-        fclose(f);
+    return 0;
+}
+
+// execute commands that we read in the binary mode
+int run_binary() {
+    int val;
+    while (!feof(stdin)) {
+        if (fread(&val, sizeof(int), 1, stdin) == 0) {
+            fprintf(stderr, "Expected a command\n");
+            return 1;
+        }
+        if ((val % 2) == 0) {
+            if (fread(&val, sizeof(int), 1, stdin) == 0) {
+                fprintf(stderr, "Expected an int\n");
+                return 2;
+            }
+            write_cb(val);
+            printf("WROTE %d\n", val);
+        } else {
+            if (read_cb(&val)) {
+                printf("READ %d\n", val);
+            } else {
+                fprintf(stderr, "Warning: READ called on empty buffer\n");
+                return 4;
+            }
+        }
     }
+
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s (binary|text)\n", argv[0]);
+        return 1;
+    }
+
+    if (strcmp(argv[1], "binary") == 0) {
+        return run_binary();
+    } else if (strcmp(argv[1], "text") == 0) {
+    	return run_text();
+    } else {
+        fprintf(stderr, "Unexpected command");
+        return 1;
+    }
+
     return 0;
 }
