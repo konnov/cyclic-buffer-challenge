@@ -5,8 +5,27 @@
  * Translated from C to Rust with Claude Sonnet 4.5.
  */
 
-// Define buffer size - can be overridden with --cfg
+// Buffer size - override with: BUF_SIZE=20 cargo build
+// Supported values: 10, 20, 50, 100
+#[cfg(buf_size_20)]
+const BUF_SIZE: usize = 20;
+#[cfg(buf_size_50)]
+const BUF_SIZE: usize = 50;
+#[cfg(buf_size_100)]
+const BUF_SIZE: usize = 100;
+#[cfg(not(any(buf_size_20, buf_size_50, buf_size_100)))]
 const BUF_SIZE: usize = 10;
+
+// Number of property test cases - override with PROPTEST_CASES=500 cargo test
+// Supported values: 100, 500, 1000, 10000
+#[cfg(all(test, proptest_500))]
+const PROPTEST_CASES: usize = 500;
+#[cfg(all(test, proptest_1000))]
+const PROPTEST_CASES: usize = 1000;
+#[cfg(all(test, proptest_10000))]
+const PROPTEST_CASES: usize = 10000;
+#[cfg(all(test, not(any(proptest_500, proptest_1000, proptest_10000))))]
+const PROPTEST_CASES: usize = 100;
 
 pub struct CyclicBuffer {
     buffer: [i32; BUF_SIZE],
@@ -93,7 +112,7 @@ mod proptests {
                 any::<i32>().prop_map(Operation::Write),
                 Just(Operation::Read),
             ],
-            0..100      // NOTE: if you bump BUF_SIZE, increase the number of tests!
+            0..PROPTEST_CASES
         )) {
             let mut cb = CyclicBuffer::new();
             let mut count = 0;

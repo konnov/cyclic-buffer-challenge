@@ -1,0 +1,9 @@
+# Example configuration for custom build settings
+# To override BUF_SIZE and PROPTEST_CASES, uncomment and modify:
+
+# [env]
+# BUF_SIZE = "100"
+# PROPTEST_CASES = "10000"
+
+# Or use environment variables directly:
+# BUF_SIZE=100 PROPTEST_CASES=10000 cargo test
