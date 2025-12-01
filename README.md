@@ -10,7 +10,20 @@ Want to add your tool? Fork the repository and make a PR!
 *For professional consulting, verification reports, or adaptation of these
 methods, see [konnov.phd][] and [protocols-made-fun.com][].*
 
+## The Challenge
+
+The challenge is to find a bug in a simple cyclic buffer implementation. The
+buffer has a fixed size (e.g., 10, 100) and supports two operations: `write` and
+`read` (or `put` and `get`). The bug is that the buffer does not correctly
+handle the case when the buffer is full and a `write` operation is performed. In
+this case, the buffer should either overwrite the oldest data or reject the
+`write` operation, but the buggy implementation allows overwriting without
+proper checks, leading to data loss.
+
 ## Approaches
+
+We leverage different tools and techniques to find this bug, including model
+checking, fuzzing, property-based testing, and random simulation.
 
 | Directory | Tool/Framework | Approach | Details |
 |-----------|---------------|----------|---------|
