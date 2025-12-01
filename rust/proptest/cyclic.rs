@@ -93,7 +93,7 @@ mod proptests {
                 any::<i32>().prop_map(Operation::Write),
                 Just(Operation::Read),
             ],
-            0..100
+            0..100      // NOTE: if you bump BUF_SIZE, increase the number of tests!
         )) {
             let mut cb = CyclicBuffer::new();
             let mut count = 0;
@@ -112,7 +112,12 @@ mod proptests {
                         let elem = cb.read();
                         assert_eq!(elem.is_some(), count > 0,
                             "Read operation mismatch: expected Some when count > 0, got {:?}", elem);
-                        count -= 1;
+                        if elem.is_some() {
+                            assert!(count > 0, "Read returned Some but count is 0");
+                            count -= 1;
+                        } else {
+                            assert!(count == 0, "Read returned None but count > 0");
+                        }
                     }
                 }
             }
