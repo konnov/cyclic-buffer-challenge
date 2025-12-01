@@ -27,12 +27,14 @@ checking, fuzzing, property-based testing, and random simulation.
 
 | Directory | Tool/Framework | Approach | Details |
 |-----------|---------------|----------|---------|
+| [`rust/proptest/`](rust/proptest/) | [proptest](https://docs.rs/proptest/latest/proptest/) | Property-based testing | [README](rust/proptest/README.md) |
 | [`c/`](c/) | [AFLplusplus](https://aflplus.plus/) | Fuzzing (binary & text inputs) | [README](c/README.md) |
 | [`tla/`](tla/) | [TLC](https://github.com/tlaplus/tlaplus/) | Breadth-first search, Random simulation | [README](tla/README.md) |
 | [`tla/`](tla/) | [Apalache](https://apalache-mc.org/) | Bounded model checking, Randomized symbolic execution | [README](tla/README.md) |
 | [`quint/`](quint/) | [Quint](https://quint-lang.org/) | Randomized simulation | [README](quint/README.md) |
 | [`quint/`](quint/) | [Quint](https://quint-lang.org/) + [Apalache](https://apalache-mc.org/) | Bounded model checking, Randomized symbolic execution | [README](quint/README.md) |
-| [`rust/proptest/`](rust/proptest/) | [proptest](https://docs.rs/proptest/latest/proptest/) | Property-based testing | [README](rust/proptest/README.md) |
+
+<!-- Links -->
 
 [konnov.phd]: https://konnov.phd/
 [protocols-made-fun.com]: https://protocols-made-fun.com/
