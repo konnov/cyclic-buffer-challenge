@@ -23,17 +23,17 @@ static int count = 0;       // number of elements in buffer
 
 /* Write an element to the cyclic buffer */
 void write_cb(int in_val) {
-    if (count == BUF_SIZE) {
-        // here we crash, and this is what we want a tool to find!
-        fprintf(stderr, "error: buffer full\n");
-        assert(0);
-    }
-
     *tail = in_val;
     if (++tail == buffer + BUF_SIZE) {
         tail = buffer;
     }
     count++;
+
+    if (count > BUF_SIZE) {
+        // here we also crash, and this is what we want a tool to find!
+        fprintf(stderr, "error: count exceeded buffer size\n");
+        assert(0);
+    }
 }
 
 /* Read an element from the cyclic buffer */
