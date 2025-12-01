@@ -20,6 +20,10 @@ this case, the buffer should either overwrite the oldest data or reject the
 `write` operation, but the buggy implementation allows overwriting without
 proper checks, leading to data loss.
 
+<p align="center">
+  <img src="_assets/logo.svg" alt="Cyclic Buffer Challenge Logo" height="150">
+</p>
+
 ## Approaches
 
 We leverage different tools and techniques to find this bug, including model

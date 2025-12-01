@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12">
+
+    <!-- North (blue, inward) -->
+    <g stroke="#4A90E2">
+      <path d="M120 10 L120 60" />
+      <path d="M110 40 L120 10 L130 40" />
+    </g>
+
+    <!-- South (orange, inward) -->
+    <g stroke="#F5A623">
+      <path d="M120 230 L120 180" />
+      <path d="M110 200 L120 230 L130 200" />
+    </g>
+
+    <!-- West (green, inward) -->
+    <g stroke="#7ED321">
+      <path d="M10 120 L60 120" />
+      <path d="M40 110 L10 120 L40 130" />
+    </g>
+
+    <!-- East (purple, inward) -->
+    <g stroke="#9013FE">
+      <path d="M230 120 L180 120" />
+      <path d="M200 110 L230 120 L200 130" />
+    </g>
+
+    <!-- NE (cyan, OUTWARD) -->
+    <g stroke="#50E3C2">
+      <path d="M140 60 L170 30" />
+      <path d="M150 40 L170 30 L160 50" />
+    </g>
+
+    <!-- NW (yellow-green, OUTWARD) -->
+    <g stroke="#B8E986">
+      <path d="M100 60 L70 30" />
+      <path d="M90 50 L70 30 L80 40" />
+    </g>
+
+    <!-- SE (red, OUTWARD) -->
+    <g stroke="#D0021B">
+      <path d="M140 180 L170 210" />
+      <path d="M150 190 L170 210 L160 200" />
+    </g>
+
+    <!-- SW (pink-magenta, OUTWARD) -->
+    <g stroke="#F85AA0">
+      <path d="M100 180 L70 210" />
+      <path d="M90 190 L70 210 L80 200" />
+    </g>
+
+    <!-- Inner circle -->
+    <circle cx="120" cy="120" r="50" stroke="#333" />
+
+  </g>
+</svg>
